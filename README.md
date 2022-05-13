@@ -5,7 +5,7 @@
   Osiris
   <br>
 </h1>
-<p align="center">Osiris es una herraminta multifuncional de discord</p>
+<p align="center">Osiris es una herramienta multifuncional de discord</p>
 
 ## COMANDOS:
 - TokenRaper: Destruye una cuenta por completo.
