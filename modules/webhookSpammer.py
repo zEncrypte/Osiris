@@ -22,9 +22,9 @@ def spammer():
         if response.status_code == 204 or response.status_code == 200:
             print(Fore.GREEN + f" [+] Mensaje enviado" + Fore.RESET)
         elif response.status_code == 429:
-            print(Fore.YELLOW + f" [~] Rate limited ({response.json()['retry_after']}ms)" + Fore.RESET)
+            print(Fore.RED + f" [~] Rate limited ({response.json()['retry_after']}ms)" + Fore.RESET)
             time.sleep(response.json()["retry_after"] / 1000)
         else:
-            print(Fore.RED + f" [-] Codigo de error: {response.status_code}" + Fore.RESET)
+            print(Fore.YELLOW + f" [-] Codigo de error: {response.status_code}" + Fore.RESET)
 
         time.sleep(.5)
