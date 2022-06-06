@@ -1,5 +1,5 @@
 import requests
-import time
+from time import sleep
 from colorama import Fore
 
 
@@ -11,7 +11,7 @@ def bumper():
 
     id = input(f" [>] ID del canal: ")
     print(f" [+] Use ctrl + c para salir")
-    time.sleep(.3)
+    sleep(.3)
     print("")
 
     while True:
@@ -21,4 +21,4 @@ def bumper():
             json = {"content" : "!d bump"}
         )
         print(Fore.GREEN + f" [+] Mensaje enviado" + Fore.RESET)
-        time.sleep(121 * 60)
+        sleep(121 * 60)
