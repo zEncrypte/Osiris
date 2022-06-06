@@ -1,7 +1,8 @@
-from colorama import Fore
 import requests
-import time
 import sys
+
+from colorama import Fore
+from time import sleep
 
 
 def progressbar(it, prefix="", size=60, file=sys.stdout):
@@ -82,4 +83,4 @@ def clear():
                 f"https://discord.com/api/channels/{id}/messages/{i}",
                 headers = headers
             )
-            time.sleep(2.5)
+            sleep(2.5)
