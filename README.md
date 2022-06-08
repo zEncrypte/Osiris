@@ -18,6 +18,7 @@
 [>] TokenGrabber: Crea un token grabber con la webhook especificado.
 [>] ServerLookup: Revisa la información de un servidor en el que esta el usuario.
 [>] MassReport: Realiza un reporte masivo
+[>] QR Grabber: Pronto..
 ```
 
 > Creditos a: [Ifeelucky](https://github.com/ifeelucky)
