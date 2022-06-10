@@ -21,6 +21,6 @@
 [>] QR Grabber: Pronto..
 ```
 
-> Creditos a: [Ifeelucky](https://github.com/ifeelucky)
+- Creditos a: [Ifeelucky](https://github.com/ifeelucky)
 
-> Creditos a: [billythegoat356](https://github.com/billythegoat356) por el pyfade
+- Creditos a: [billythegoat356](https://github.com/billythegoat356) por el **pyfade**
