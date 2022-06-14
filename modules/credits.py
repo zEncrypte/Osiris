@@ -1,7 +1,14 @@
+import sys
+from time import sleep
+def tortuga(_str):
+    for letra in _str:
+        sys.stdout.write(letra);sys.stdout.flush();sleep(0.03)
+
 def show_credits():
-    print(f"\n [+] https://linktr.ee/FeelLucky")
-    print(f"\n [+] billythegoat | Pyfade")
-    print(f"\n [+] https://github.com/zEncrypte | me:3")
+    
+    tortuga(f"\nCreditos a: iFeelLucky")
+    tortuga(f"\nCreditos a: zEncrypte")
+    tortuga(f"\nCreditos a: billythegoat | Pyfade")
 
 def show_help():
     pass
