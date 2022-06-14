@@ -15,6 +15,11 @@ try:
     import modules.serverLookup as serverLookup
     import modules.commands as help
 except ImportError as ex:
+    
+    def tortuga(_str):
+        for letra in _str:
+            sys.stdout.write(letra);sys.stdout.flush();sleep(0.03)
+    
     def clear():
         os.system("cls" if os.name == 'nt' else "clear")
         print(f'\n {Colors.purple}[{Colors.light_blue}+{Colors.purple}]{Colors.white} Instalando requisitos, espere')
@@ -35,14 +40,11 @@ except ImportError as ex:
     os.system('python osiris.py')
     sleep(2)
     exit()
+    
 def clear():
     system("cls" if name == 'nt' else "clear")
 if name == 'nt':
         system("title Osiris")
-
-def tortuga(_str):
-    for letra in _str:
-        sys.stdout.write(letra);sys.stdout.flush();sleep(0.03)
 
 class Client: 
     def __init__(self):
