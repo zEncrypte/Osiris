@@ -90,7 +90,7 @@ class Client:
         opcion = input(f" {Colors.purple}[{Colors.light_blue}>{Colors.purple}]Opcion: {Colors.white}")
         data = self.modules[opcion]
         data["function"]()
-        input(f" {Colors.purple}[{Colors.red}!{Colors.purple}] {Colors.white}Listo, presione enter para salir.")
+        input(f"\n {Colors.purple}[{Colors.red}!{Colors.purple}] {Colors.white}Listo, presione enter para salir.")
         self.main()
 if __name__ == '__main__':
     client = Client()
