@@ -1,14 +1,20 @@
 import sys
 from time import sleep
+from pystyle import Colors, Colorate, System, Cursor
 def tortuga(_str):
     for letra in _str:
         sys.stdout.write(letra);sys.stdout.flush();sleep(0.03)
 
 def show_credits():
-    
-    tortuga(f"\nCreditos a: iFeelLucky")
-    tortuga(f"\nCreditos a: zEncrypte")
-    tortuga(f"\nCreditos a: billythegoat | Pyfade")
-
-def show_help():
-    pass
+    System.Clear()
+    System.Title("End")
+    Cursor.HideCursor()
+    tortuga(Colorate.Vertical(Colors.purple_to_red, f"""\n Agradecimientos especiales a
+    \n :: iFeelLucky ::
+    \n :: zEncrypte :: 
+    \n :: Y a ti ::
+    \n :: Por usar esta herramienta :: 
+    \n :: Nos alegra haberte ayudado ::
+    \n :: Gracias por usar Osiris :: 
+    \n"""))
+    exit()
