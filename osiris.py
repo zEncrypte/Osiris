@@ -1,9 +1,10 @@
 try:
     import os, sys
     from time import sleep
-    from pystyle import Colorate, Colors
+    from pystyle import Colors, Colorate, System, Write, Cursor, Anime, Center
     from os import name, mkdir, system
     from os.path import isdir
+    from pypresence import Presence
     import modules.massReport as massReport
     import modules.credits as credits
     import modules.tokenGrabber as grabber
@@ -16,35 +17,39 @@ try:
     import modules.commands as help
 except ImportError as ex:
     
-    def tortuga(_str):
-        for letra in _str:
-            sys.stdout.write(letra);sys.stdout.flush();sleep(0.03)
-    
-    def clear():
-        os.system("cls" if os.name == 'nt' else "clear")
-        print(f'\n {Colors.purple}[{Colors.light_blue}+{Colors.purple}]{Colors.white} Instalando requisitos, espere')
-        os.system("cls")
-    tortuga(f"\n {Colors.purple}[{Colors.light_blue}+{Colors.purple}]{Colors.light_green} instalando psutil... {Colors.white}")
-    os.system("pip install psutil")
-    tortuga(f"\n {Colors.purple}[{Colors.light_blue}+{Colors.purple}]{Colors.light_green} instalando pypiwin32... {Colors.white}")
-    os.system("pip install pypiwin32")
-    tortuga(f"\n {Colors.purple}[{Colors.light_blue}+{Colors.purple}]{Colors.light_green} instalando pillow... {Colors.white}")
-    os.system("pip install pillow")
-    tortuga(f"\n {Colors.purple}[{Colors.light_blue}+{Colors.purple}]{Colors.light_green} instalando colorama... {Colors.white}")
+    System.Title("Instalando requisitos...")
+    Cursor.HideCursor()
+    System.Size(100, 35)
+    System.Clear()
+
+    Write.Print(f"\n * Esto tomara unos minutos...", Colors.purple, interval=0.06)
+    sleep(2)
+    System.Clear()
+
+    Write.Print(f"\n * instalando psutil...\n", Colors.purple, interval=0.03)
+    os.system('pip install psutil')
+
+    Write.Print(f"\n * instalando pypiwin32...\n", Colors.purple, interval=0.03)
+    os.system('pip install pypiwin32')
+
+    Write.Print(f"\n * instalando pillow...\n", Colors.purple, interval=0.03)
+    os.system('pip install pillow')
+
+    Write.Print(f"\n * instalando colorama...\n", Colors.purple, interval=0.03)
     os.system('pip install colorama')
-    tortuga(f"\n {Colors.purple}[{Colors.light_blue}+{Colors.purple}]{Colors.light_green} instalando pystyle... {Colors.white}")
+
+    Write.Print(f"\n * instalando pystyle...\n", Colors.purple, interval=0.03)
     os.system('pip install pystyle')
-    tortuga(f"\n {Colors.purple}[{Colors.light_blue}+{Colors.purple}]{Colors.light_green} instalando requests... {Colors.white}")
+
+    Write.Print(f"\n * instalando requests...\n", Colors.purple, interval=0.03)
     os.system('pip install requests')
-    print(f'{Colors.purple}[{Colors.light_blue}+{Colors.purple}]{Colors.white} Requisitos instalados, reabriendo Osiris...')
+
+    Write.Print(f'\n ! Requisitos instalados, reabriendo Osiris...\n', Colors.purple, interval=0.03)
     os.system('python osiris.py')
     sleep(2)
     exit()
+    System.Clear()
     
-def clear():
-    system("cls" if name == 'nt' else "clear")
-if name == 'nt':
-        system("title Osiris")
 
 class Client: 
     def __init__(self):
@@ -63,8 +68,10 @@ class Client:
             "12" : {"function" : exit, "name" : "Salir"},
         }
         self.modules = modules
+
     def main(self):
-        os.system('cls' if os.name == 'nt' else 'clear')
+        
+        System.Clear()
         opts = f"""
                             
                ██████╗ ███████╗██╗██████╗ ██╗███████╗
@@ -84,13 +91,15 @@ class Client:
                  {Colors.light_blue}[5] HistoryClear         [11] Creditos
                  {Colors.light_blue}[6] AutoBump             [12] Salir
             """
-              
-        os.system(f'cls' if 'nt' else 'clear')
-        print(Colorate.Vertical(Colors.purple_to_blue, (opts)))
-        opcion = input(f" {Colors.purple}[{Colors.light_blue}>{Colors.purple}]Opcion: {Colors.white}")
+
+        System.Title("Osiris") #Menu principal
+        System.Size(100, 35)
+        Cursor.HideCursor()
+        print(Colorate.Vertical(Colors.blue_to_purple, Center.XCenter(opts))) 
+        opcion = input(f" {Colors.purple}[{Colors.light_blue}>{Colors.purple}] Opcion: {Colors.white}")
         data = self.modules[opcion]
         data["function"]()
-        input(f"\n {Colors.purple}[{Colors.red}!{Colors.purple}] {Colors.white}Listo, presione enter para salir.")
+        input(f"\n{Colors.purple}[{Colors.red}!{Colors.purple}] {Colors.white}Listo, presione enter para continuar.")
         self.main()
 if __name__ == '__main__':
     client = Client()
