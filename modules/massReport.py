@@ -1,16 +1,16 @@
-from colorama import Fore
-import requests
-import threading
-import time
-import random
-
+import random, time, threading, requests
+from pystyle import Colors, System, Cursor
 
 def start():
-    token = input(Fore.BLUE + f"\n [>] Token: ")
-    guildId = input(f" [>] ID del servidor: ")
-    channelId = input(f" [>] ID del canal: ")
-    messageId = input(f" [>] ID del mensaje: ")
-    reason = input(f" [>] Razon: " + Fore.RESET)
+
+    System.Title("Mass Report :: Osiris")
+    Cursor.HideCursor()
+
+    token = input(Fore.BLUE + f"\n {Colors.purple}[{Colors.light_blue}>{Colors.purple}] Token: {Colors.white}")
+    guildId = input(f" {Colors.purple}[{Colors.light_blue}>{Colors.purple}] ID del servidor: {Colors.white}")
+    channelId = input(f" {Colors.purple}[{Colors.light_blue}>{Colors.purple}] ID del canal: {Colors.white}")
+    messageId = input(f" {Colors.purple}[{Colors.light_blue}>{Colors.purple}] ID del mensaje: {Colors.white}")
+    reason = input(f" {Colors.purple}[{Colors.light_blue}>{Colors.purple}] Razon: {Colors.white}")
 
     headers = {
         "Content-Type" : "application/json",
@@ -28,15 +28,15 @@ def start():
                 json = payload
             )
             if response.status_code == 201:
-                print(Fore.GREEN + f" [+] Reporte enviado"+ Fore.RESET)
+                print(f" {Colors.purple}[{Colors.light_red}*{Colors.purple}] {Colors.red}Reporte enviado{Colors.white}")
             elif response.status_code == 429:
-                print(Fore.YELLOW + f" [~] Limitado, esperando 5 segundos"+ Fore.RESET)
+                print(f" {Colors.purple}[{Colors.yellow}~{Colors.purple}] {Colors.yellow}Limitado, esperando 5 segundos{Colors.white}")
                 time.sleep(5)
             elif response.status_code == 401:
-                print(Fore.YELLOW +f" [-] Token invalido" + Fore.RESET)
+                print(Fore.YELLOW +f" {Colors.purple}[{Colors.red}-{Colors.purple}]{Colors.red} Token invalido{Colors.white}")
                 return
             else:
-                print(Fore.RED + f" [-] Error desconocido: {response.status_code}" + Fore.RESET)
+                print(Fore.RED + f" {Colors.purple}[{Colors.red}-{Colors.purple}]{Colors.red} Error: {response.status_code}{Colors.white}")
 
     for i in range(500):
         threading.Thread(target = report).start()
