@@ -1,7 +1,5 @@
-import requests
-import sys
-
-from colorama import Fore
+import sys, requests
+from pystyle import Colors, System, Cursor
 from time import sleep
 
 
@@ -11,7 +9,7 @@ def progressbar(it, prefix="", size=60, file=sys.stdout):
     def show(i, user): 
         x = int(size * i / count) 
 
-        file.write(Fore.GREEN + f"[+] | {'#' * x}{'.' * ( size - x )}| {i} / {count} | {str(user):<30}              \r" + Fore.RESET)
+        file.write(f"{Colors.purple}[{Colors.light_blue}*{Colors.purple}] {Colors.light_green}| {'#' * x}{'.' * ( size - x )}| {i} / {count} | {str(user):<30}              \r{Colors.white}")
         file.flush() 
 
     if count > 0:
@@ -21,33 +19,37 @@ def progressbar(it, prefix="", size=60, file=sys.stdout):
             show(i+1, item) 
             yield item 
 
-        show(len(it), "Listo") 
+        show(len(it), f"{Colors.light_red} Listo") 
 
         file.write("\n") 
         file.flush()
     else:
-        print(Fore.RED + f" [+] |{'#' * 60} | 0/0 | Mensajes no encontrados" + Fore.RESET)
+        print(f" {Colors.purple}[{Colors.light_blue}*{Colors.purple}] |{'#' * 60} | {Colors.light_green}0/0 | {Colors.red}Mensajes no encontrados{Colors.white}")
 
 def clear():
+    
+    System.Title("History Clear :: Osiris")
+    Cursor.HideCursor()
+
     headers = {
         'User-Agent' : 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.12) Gecko/20050915 Firefox/1.0.7',
-        'Authorization' : input(Fore.BLUE + f"\n [>] Token: " + Fore.RESET)
+        'Authorization' : input(f"\n {Colors.purple}[{Colors.light_blue}>{Colors.purple}] Token: {Colors.white}")
     }
 
-    id = input(Fore.BLUE + f" [>] ID del canal: " + Fore.RESET)
+    id = input(f" {Colors.purple}[{Colors.light_blue}>{Colors.purple}] ID del canal: {Colors.white}")
 
-    author = requests.get("https://discord.com/api/users/@me", headers = headers).json()["id"]
+    author = requests.get("https://discord.com/api/v9/users/@me", headers = headers).json()["id"]
 
     allMessages = []
 
     messages = requests.get(
-        f"https://discord.com/api/channels/{id}/messages",
+        f"https://discord.com/api/v9/channels/{id}/messages",
         headers = headers,
         params = {"limit" : 100}
     )
 
     if messages.status_code != 200:
-        print(Fore.RED + f" [-] Canal no encontrado" + Fore.RESET)
+        print(f" {Colors.purple}[{Colors.red}-{Colors.purple}] {Colors.red}Canal no encontrado {Colors.white}")
         return
 
     for x in messages.json():
@@ -58,7 +60,7 @@ def clear():
         for i in range(0, 1000, 100):
             messages = messages.json()
             messages = requests.get(
-                f"https://discord.com/api/channels/{id}/messages",
+                f"https://discord.com/api/v9/channels/{id}/messages",
                 headers = headers,
                 params = {"limit" : 100, "before" : messages[-1]["id"]}
             )
@@ -73,14 +75,14 @@ def clear():
 
     for i in progressbar(allMessages, "", 60):
         responce = requests.delete(
-            f"https://discord.com/api/channels/{id}/messages/{i}",
+            f"https://discord.com/api/v9/channels/{id}/messages/{i}",
             headers = headers
         )
         time.sleep(2.5)
 
         while responce.status_code != 204:
             responce = requests.delete(
-                f"https://discord.com/api/channels/{id}/messages/{i}",
+                f"https://discord.com/api/v9/channels/{id}/messages/{i}",
                 headers = headers
             )
             sleep(2.5)
