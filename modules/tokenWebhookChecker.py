@@ -1,33 +1,38 @@
-from colorama import Fore
-import requests
-import time
+import sys, requests
+from time import sleep
+from pystyle import Colors, Write, Cursor, System
 
+def tortuga(_str): # slooow
+    for letra in _str:
+        sys.stdout.write(letra);sys.stdout.flush();sleep(0.04)
 
 def token():
-    token = input(Fore. BLUE + f"\n[>] Token: ")
+    System.Title('Token Checker :: Osiris')
+    Cursor.HideCursor()
+    token = input(f"\n {Colors.purple}[{Colors.light_blue}>{Colors.purple}] Token: {Colors.white}")
 
-    print(f" [+] Obteniendo informacion del usuario" + Fore.RESET)
-    time.sleep(.5)
+    tortuga(f"\n {Colors.purple}[{Colors.light_red}*{Colors.purple}] Obteniendo informacion del usuario ")
+
+    sleep(.5)
 
     user = requests.get("https://discord.com/api/users/@me", headers = {'Authorization' : token})
 
     if user.status_code == 401:
-        print(Fore.YELLOW + f" [-] Token invalido" + Fore.RESET)
+        Write.Print(f"\n ! Token invalido", Colors.red, interval=0.05)
         return
 
     servers = requests.get("https://discord.com/api/users/@me/guilds", headers = {'Authorization' : token}).json()
     relations = requests.get("https://discord.com/api/v9/users/@me/relationships", headers = {'Authorization' : token}).json()
 
     user = user.json()
+    print(f"\n {Colors.purple}[{Colors.light_red}*{Colors.purple}] Token valido{Colors.reset}")
+    print(f" {Colors.purple}[{Colors.light_red}*{Colors.purple}] User: {user['username']}#{user['discriminator']} | Email: {user['email']}")
+    print(f" {Colors.purple}[{Colors.light_red}*{Colors.purple}] Servidores: {len(servers)} | Amigos: {len([i for i in relations if i['type'] == 1])}{Colors.reset}")
 
-    print(Fore.GREEN + f"\n [+] Token valido")
-    print(f" [+] User: {user['username']}#{user['discriminator']} | Email: {user['email']}")
-    print(f" [+] Servidores: {len(servers)} | Amigos: {len([i for i in relations if i['type'] == 1])}" + Fore.RESET)
-
-    inp = input(f"\n ¿Quiere descargar informacion adicional? (s/n)")
+    inp = Write.Input(f"\n ¿Quiere descargar informacion adicional? (s/n) ", Colors.purple, interval=0.04)
 
     if "s" in inp.lower():
-        print(f" [+] Este archivo lo puedes encontrar en la carpeta *output*")
+        print(f"\n {Colors.purple}[{Colors.light_red}*{Colors.purple}] Este archivo lo puedes encontrar en esta carpeta")
 
         serversOT = ""
         for i in servers:
@@ -49,8 +54,8 @@ def token():
         else:
             avatar = "Sin avatar"
 
-        with open(f"./output/TokenData {user['username']}#{user['discriminator']}.txt", "w", encoding = "utf-8") as file:
-            file.write(
+        with open(f" {user['username']}#{user['discriminator']}.txt", "w", encoding = "utf-8") as f:
+            f.write(
     f"""~~~~~~~~~~~ Informacion del Usuario ~~~~~~~~~~~
     Usuario: {user['username']}#{user['discriminator']}
     ID: {user['id']}
@@ -65,23 +70,22 @@ def token():
     {serversOT}
     ~~~~~~~~~~~ Informacion de amigos ~~~~~~~~~~~
     {relationsOT}""")
-    
 
 def webhook():
-    webhook = input(Fore.BLUE + f"\n [>] Webhook Url: " + Fore.RESET)
 
-    print(Fore.GREEN + f" [+] informacion de un webhook" + Fore.RESET)
-    time.sleep(.5)
+    System.Title('Webhook Checker :: Osiris')
+    Cursor.HideCursor()
+    webhook = input(f"\n {Colors.purple}[{Colors.light_blue}>{Colors.purple}] Webhook Url: {Colors.white}")
+    print(f"\n {Colors.purple}[{Colors.light_red}*{Colors.purple}] Informacion de la webhook{Colors.white}")
+    sleep(.5)
 
     responce = requests.get(
         webhook
     )
 
     if responce.status_code != 200:
-        print(Fore.YELLOW + f" [!] Webhook invalido" + Fore.RESET)
+        print(f" {Colors.purple}[{Colors.red}-{Colors.purple}]{Colors.red} Webhook invalido")
         return
-
     responce = responce.json()
-
-    print(Fore.GREEN + f"\n [+] Webhook valido" + Fore.RESET)
-    print(f" [+] Nombre: {responce['name']} ID: {responce['id']}")
+    print(f" {Colors.purple}[{Colors.light_red}*{Colors.purple}] Webhook valido")
+    print(f"\n {Colors.purple}[{Colors.light_red}*{Colors.purple}] Nombre: {Colors.orange}{responce['name']}\n {Colors.purple}[{Colors.light_red}*{Colors.purple}] ID:{Colors.orange} {responce['id']}{Colors.white}")
