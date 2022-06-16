@@ -1,4 +1,4 @@
-import sys, requests
+import requests
 from pystyle import Colors, System, Cursor
 
 
