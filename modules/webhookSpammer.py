@@ -1,13 +1,13 @@
-import requests
-import time
-from colorama import Fore
-
-
+import time, requests
+from pystyle import Colors, System, Cursor
 
 def spammer():
-    webhook = input(Fore.BLUE + f"\n [>] Webhook Url: ")
-    message = input(f" [>] Mensaje: ")
-    timer = input(f" [>] Cantidad de tiempo del ataque (segundos): " + Fore.RESET)
+    System.Title("Webhook Spammer :: Osiris")
+    Cursor.HideCursor()
+
+    webhook = input(f"\n {Colors.purple}[{Colors.light_blue}>{Colors.purple}] Webhook Url: {Colors.white}")
+    message = input(f" {Colors.purple}[{Colors.light_blue}>{Colors.purple}] Mensaje: {Colors.white}")
+    timer = input(f" {Colors.purple}[{Colors.light_blue}>{Colors.purple}] Delay: {Colors.white}")
     print("")
 
     timeout = time.time() + 1 * float(timer) + 2
@@ -20,11 +20,11 @@ def spammer():
         )
 
         if response.status_code == 204 or response.status_code == 200:
-            print(Fore.GREEN + f" [+] Mensaje enviado" + Fore.RESET)
+            print(f" {Colors.purple}[{Colors.light_red}+{Colors.purple}] Mensaje enviado{Colors.white}")
         elif response.status_code == 429:
-            print(Fore.RED + f" [~] Rate limited ({response.json()['retry_after']}ms)" + Fore.RESET)
+            print(f" {Colors.purple}[{Colors.yellow}-{Colors.purple}] {Colors.yellow}Rate limited {response.json()['retry_after']}{Colors.green}ms{Colors.white}")
             time.sleep(response.json()["retry_after"] / 1000)
         else:
-            print(Fore.YELLOW + f" [-] Codigo de error: {response.status_code}" + Fore.RESET)
+            print(f" {Colors.purple}[{Colors.red}-{Colors.purple}] Error: {response.status_code}")
 
         time.sleep(.5)
