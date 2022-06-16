@@ -87,7 +87,7 @@ class Client:
                  {Colors.light_blue}[1] TokenRape            [7] TokenGrabber
                  {Colors.light_blue}[2] WebhookSpammer       [8] Server Lookup
                  {Colors.light_blue}[3] TokenChecker         [9] Mass Report
-                 {Colors.light_blue}[4] WebhookChecker       [10] Ayuda
+                 {Colors.light_blue}[4] WebhookChecker       [10] Comandos
                  {Colors.light_blue}[5] HistoryClear         [11] Creditos
                  {Colors.light_blue}[6] AutoBump             [12] Salir
             """
