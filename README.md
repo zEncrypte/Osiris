@@ -20,3 +20,4 @@
 [*] MassReport :: Realiza un reporte masivo
 [/] QR Grabber :: Pronto..
 ```
+Credits :: [IFeeLucky](https://github.com/IFeeLucky)
