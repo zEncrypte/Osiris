@@ -10,7 +10,7 @@ def show_credits():
     System.Title("End")
     Cursor.HideCursor()
     tortuga(Colorate.Vertical(Colors.purple_to_red, f"""\n Agradecimientos especiales a
-    \n :: iFeelLucky ::
+    \n :: iFeeLucky ::
     \n :: zEncrypte :: 
     \n :: Y a ti ::
     \n :: Por usar esta herramienta :: 
