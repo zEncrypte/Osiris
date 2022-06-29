@@ -1,7 +1,7 @@
 try:
     import os, sys
     from time import sleep
-    from pystyle import Colors, Colorate, System, Write, Cursor, Anime, Center
+    from pystyle import *
     from os import name, mkdir, system
     from os.path import isdir
     from pypresence import Presence
